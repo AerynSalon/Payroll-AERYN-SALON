@@ -1,0 +1,399 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --light-bg: #f8f9fa;
+    --dark-text: #343a40;
+    --border-color: #dee2e6;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--dark-text);
+    background-color: var(--light-bg);
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+/* Input Section Styling */
+.input-section {
+    flex: 1;
+    min-width: 300px; /* Minimum width for input section */
+    padding-right: 20px;
+    border-right: 1px solid var(--border-color);
+}
+
+.input-section h1 {
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+#payslipForm fieldset {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 25px;
+    background-color: var(--light-bg);
+}
+
+#payslipForm legend {
+    font-weight: 600;
+    color: var(--primary-color);
+    padding: 0 10px;
+    font-size: 1.1em;
+}
+
+#payslipForm label {
+    display: block;
+    margin-bottom: 8px;
+    margin-top: 15px;
+    font-weight: 400;
+    color: var(--dark-text);
+}
+
+#payslipForm input[type="text"],
+#payslipForm input[type="number"],
+#payslipForm input[type="date"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+#payslipForm input[type="text"]:focus,
+#payslipForm input[type="number"]:focus,
+#payslipForm input[type="date"]:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+#printButton {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    background-color: var(--success-color);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 30px;
+}
+
+#printButton:hover {
+    background-color: #218838;
+}
+
+.add-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+    background-color: #0056b3;
+}
+
+.dynamic-input-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.dynamic-input-row input {
+    flex: 1;
+}
+
+.delete-button {
+    background-color: var(--danger-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    line-height: 28px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+#printButton, #emailButton {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#printButton {
+    background-color: var(--success-color);
+    color: var(--white);
+}
+
+#printButton:hover {
+    background-color: #218838;
+}
+
+#emailButton {
+    background-color: #007bff;
+    color: white;
+}
+
+#emailButton:hover {
+    background-color: #0056b3;
+}
+
+/* Payslip Section Styling */
+.payslip-section {
+    flex: 1.5; /* Payslip section takes more space */
+    min-width: 400px; /* Minimum width for payslip section */
+    padding-left: 20px;
+}
+
+.payslip {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    min-height: 700px; /* Ensure a decent height for the payslip */
+}
+
+.payslip-header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 20px;
+}
+
+.payslip-header h2 {
+    color: var(--primary-color);
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+.payslip-header p {
+    font-size: 0.9em;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+}
+
+.payslip-header h3 {
+    color: var(--dark-text);
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.payslip-details table,
+.payslip-earnings table,
+.payslip-deductions table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.payslip-details td,
+.payslip-earnings td,
+.payslip-deductions td {
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.payslip-details td:first-child {
+    width: 35%;
+    font-weight: 400;
+}
+
+.payslip-details td:last-child {
+    font-weight: 600;
+}
+
+.payslip-earnings h4,
+.payslip-deductions h4 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+}
+
+.payslip-earnings .amount,
+.payslip-deductions .amount {
+    text-align: right;
+    font-weight: 500;
+}
+
+.payslip-earnings .total td,
+.payslip-deductions .total td {
+    border-bottom: none;
+    padding-top: 15px;
+    font-size: 1.1em;
+}
+
+.payslip-earnings .total td:first-child,
+.payslip-deductions .total td:first-child {
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.payslip-earnings .total .amount,
+.payslip-deductions .total .amount {
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.payslip-net-salary {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid var(--primary-color);
+}
+
+.payslip-net-salary h3 {
+    font-size: 1.8em;
+    color: var(--success-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .container {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .input-section {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding-right: 0;
+        padding-bottom: 30px;
+    }
+
+    .payslip-section {
+        padding-left: 0;
+        padding-top: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .input-section h1 {
+        font-size: 1.5em;
+    }
+
+    #payslipForm fieldset {
+        padding: 15px;
+    }
+
+    .payslip-header h2 {
+        font-size: 1.5em;
+    }
+
+    .payslip-header h3 {
+        font-size: 1.2em;
+    }
+
+    .payslip-net-salary h3 {
+        font-size: 1.5em;
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        background-color: var(--white);
+        padding: 0;
+    }
+    .container {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        display: block; /* Remove flex for print */
+    }
+    .input-section, #printButton {
+        display: none; /* Hide input form and print button */
+    }
+    .payslip-section {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    .payslip {
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 20px;
+        min-height: auto;
+    }
+    .payslip-header, .payslip-net-salary {
+        border-color: #ccc; /* Lighter border for print */
+    }
+    /* Ensure text is black for print */
+    .payslip * {
+        color: #000 !important;
+    }
+    .payslip-header h2, .payslip-header h3, .payslip-earnings h4, .payslip-deductions h4 {
+        color: #000 !important;
+    }
+    .payslip-net-salary h3 {
+        color: #000 !important;
+    }
+}

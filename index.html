@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Slip Gaji Interaktif</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="input-section">
+            <h1>Input Data Slip Gaji</h1>
+            <form id="payslipForm">
+                <fieldset>
+                    <legend>Informasi Perusahaan</legend>
+                    <label for="companyName">Nama Perusahaan:</label>
+                    <input type="text" id="companyName" value="PT. Contoh Jaya">
+
+                    <label for="companyAddress">Alamat Perusahaan:</label>
+                    <input type="text" id="companyAddress" value="Jl. Merdeka No. 123, Jakarta">
+                </fieldset>
+
+                <fieldset>
+                    <legend>Informasi Karyawan</legend>
+                    <label for="employeeName">Nama Karyawan:</label>
+                    <input type="text" id="employeeName" value="Budi Santoso">
+
+                    <label for="employeeId">ID Karyawan:</label>
+                    <input type="text" id="employeeId" value="EMP-001">
+
+                    <label for="position">Jabatan:</label>
+                    <input type="text" id="position" value="Software Engineer">
+                </fieldset>
+
+                <fieldset>
+                    <legend>Periode Gaji</legend>
+                    <label for="payPeriodStart">Periode Awal:</label>
+                    <input type="date" id="payPeriodStart" value="2025-10-01">
+
+                    <label for="payPeriodEnd">Periode Akhir:</label>
+                    <input type="date" id="payPeriodEnd" value="2025-10-31">
+
+                    <label for="payDate">Tanggal Pembayaran:</label>
+                    <input type="date" id="payDate" value="2025-11-05">
+                </fieldset>
+
+                <fieldset>
+                    <legend>Pendapatan</legend>
+                    <label for="basicSalary">Gaji Pokok:</label>
+                    <input type="number" id="basicSalary" value="5000000">
+                    <div id="dynamicEarnings">
+                        <!-- Dynamic earnings inputs will be injected here -->
+                    </div>
+                    <button type="button" id="addEarning" class="add-button">+ Tambah Pendapatan</button>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Potongan</legend>
+                    <div id="dynamicDeductions">
+                        <!-- Dynamic deductions inputs will be injected here -->
+                    </div>
+                    <button type="button" id="addDeduction" class="add-button">+ Tambah Potongan</button>
+                </fieldset>
+            </form>
+            <div class="action-buttons">
+                <button id="printButton">Cetak Slip Gaji</button>
+                <button id="emailButton">Kirim via Email</button>
+            </div>
+        </div>
+
+        <div class="payslip-section">
+            <div class="payslip" id="payslipPreview">
+                <div class="payslip-header">
+                    <h2 id="previewCompanyName">PT. Contoh Jaya</h2>
+                    <p id="previewCompanyAddress">Jl. Merdeka No. 123, Jakarta</p>
+                    <h3>SLIP GAJI KARYAWAN</h3>
+                    <p>Periode: <span id="previewPayPeriodStart">01-10-2025</span> s/d <span id="previewPayPeriodEnd">31-10-2025</span></p>
+                </div>
+
+                <div class="payslip-details">
+                    <table>
+                        <tr>
+                            <td>Nama Karyawan</td>
+                            <td>: <span id="previewEmployeeName">Budi Santoso</span></td>
+                        </tr>
+                        <tr>
+                            <td>ID Karyawan</td>
+                            <td>: <span id="previewEmployeeId">EMP-001</span></td>
+                        </tr>
+                        <tr>
+                            <td>Jabatan</td>
+                            <td>: <span id="previewPosition">Software Engineer</span></td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Pembayaran</td>
+                            <td>: <span id="previewPayDate">05-11-2025</span></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="payslip-earnings">
+                    <h4>PENDAPATAN</h4>
+                    <table>
+                        <tbody id="previewEarningsBody">
+                            <!-- Dynamic earnings rows will be injected here -->
+                        </tbody>
+                        <tfoot>
+                            <tr class="total">
+                                <td><strong>TOTAL PENDAPATAN</strong></td>
+                                <td class="amount"><strong><span id="previewTotalEarnings">Rp 6.000.000</span></strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="payslip-deductions">
+                    <h4>POTONGAN</h4>
+                    <table>
+                        <tbody id="previewDeductionsBody">
+                            <!-- Dynamic deductions rows will be injected here -->
+                        </tbody>
+                        <tfoot>
+                            <tr class="total">
+                                <td><strong>TOTAL POTONGAN</strong></td>
+                                <td class="amount"><strong><span id="previewTotalDeductions">Rp 300.000</span></strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="payslip-net-salary">
+                    <h3>GAJI DITERIMA: <span id="previewNetSalary">Rp 5.700.000</span></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
