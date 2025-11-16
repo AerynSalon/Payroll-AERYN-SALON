@@ -30,8 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const formatDate = (dateString) => {
         if (!dateString) return '';
-        const date = new Date(dateString);
-        return new Intl.DateTimeFormat('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(date);
+        // For 'month' input type, value is 'YYYY-MM'.
+        // We need to create a valid date object from it.
+        // Appending '-01' makes it 'YYYY-MM-DD'.
+        const date = new Date(dateString + '-01T12:00:00'); // Use noon to avoid timezone shifts
+        const options = {
+            year: 'numeric',
+            month: 'long'
+        };
+        return new Intl.DateTimeFormat('id-ID', options).format(date);
     };
 
     // --- Render Functions ---
