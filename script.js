@@ -83,8 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('previewEmployeeId').textContent = document.getElementById('employeeId').value;
         document.getElementById('previewPosition').textContent = document.getElementById('position').value;
         document.getElementById('previewPayPeriodStart').textContent = formatDate(document.getElementById('payPeriodStart').value);
-        document.getElementById('previewPayPeriodEnd').textContent = formatDate(document.getElementById('payPeriodEnd').value);
-        document.getElementById('previewPayDate').textContent = formatDate(document.getElementById('payDate').value);
 
         // Re-render the preview tables
         renderPayslipPreview();
@@ -176,9 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const recipient = ''; // Let user fill this in
         const employeeName = document.getElementById('employeeName').value;
         const payPeriodStart = formatDate(document.getElementById('payPeriodStart').value);
-        const payPeriodEnd = formatDate(document.getElementById('payPeriodEnd').value);
 
-        const subject = `Slip Gaji ${employeeName} - Periode ${payPeriodStart} s/d ${payPeriodEnd}`;
+        const subject = `Slip Gaji ${employeeName} - Periode ${payPeriodStart}`;
 
         // Re-calculate totals to ensure they are up-to-date
         const basicSalary = parseFloat(document.getElementById('basicSalary').value) || 0;
@@ -194,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body += `Nama Karyawan: ${employeeName}\n`;
         body += `ID Karyawan: ${document.getElementById('employeeId').value}\n`;
         body += `Jabatan: ${document.getElementById('position').value}\n`;
-        body += `Periode: ${payPeriodStart} s/d ${payPeriodEnd}\n`;
+        body += `Periode: ${payPeriodStart}\n`;
         body += `----------------------------------\n\n`;
 
         body += `PENDAPATAN\n`;
