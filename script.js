@@ -3,10 +3,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('payslipForm');
     const printButton = document.getElementById('printButton');
     const addEarningButton = document.getElementById('addEarning');
+    const addCommissionButton = document.getElementById('addCommission');
     const addDeductionButton = document.getElementById('addDeduction');
     const dynamicEarningsContainer = document.getElementById('dynamicEarnings');
+    const dynamicCommissionsContainer = document.getElementById('dynamicCommissions');
     const dynamicDeductionsContainer = document.getElementById('dynamicDeductions');
     const previewEarningsBody = document.getElementById('previewEarningsBody');
+    const previewCommissionsBody = document.getElementById('previewCommissionsBody');
     const previewDeductionsBody = document.getElementById('previewDeductionsBody');
 
     // --- State Management ---
@@ -15,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: Date.now() + 2, label: 'Tunjangan Makan', value: 300000 },
         { id: Date.now() + 3, label: 'Lembur', value: 200000 }
     ];
+    let commissions = [];
     let deductions = [
         { id: Date.now() + 4, label: 'Pajak (PPh 21)', value: 150000 },
         { id: Date.now() + 5, label: 'BPJS Ketenagakerjaan', value: 100000 }
@@ -32,65 +36,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Render Functions ---
     const renderDynamicInputs = () => {
-        // Render Earnings
-        dynamicEarningsContainer.innerHTML = '';
-        earnings.forEach(item => {
-            const row = document.createElement('div');
-            row.className = 'dynamic-input-row';
-            row.dataset.id = item.id;
-            row.innerHTML = `
-                <input type="text" class="dynamic-label" value="${item.label}" placeholder="Nama Pendapatan">
+        const createInputRow = (item, placeholder) => `
+            <div class="dynamic-input-row" data-id="${item.id}">
+                <input type="text" class="dynamic-label" value="${item.label}" placeholder="Nama ${placeholder}">
                 <input type="number" class="dynamic-value" value="${item.value}" placeholder="Jumlah">
                 <button type="button" class="delete-button">X</button>
-            `;
-            dynamicEarningsContainer.appendChild(row);
-        });
+            </div>
+        `;
 
-        // Render Deductions
-        dynamicDeductionsContainer.innerHTML = '';
-        deductions.forEach(item => {
-            const row = document.createElement('div');
-            row.className = 'dynamic-input-row';
-            row.dataset.id = item.id;
-            row.innerHTML = `
-                <input type="text" class="dynamic-label" value="${item.label}" placeholder="Nama Potongan">
-                <input type="number" class="dynamic-value" value="${item.value}" placeholder="Jumlah">
-                <button type="button" class="delete-button">X</button>
-            `;
-            dynamicDeductionsContainer.appendChild(row);
-        });
+        dynamicEarningsContainer.innerHTML = earnings.map(item => createInputRow(item, 'Pendapatan')).join('');
+        dynamicCommissionsContainer.innerHTML = commissions.map(item => createInputRow(item, 'Komisi')).join('');
+        dynamicDeductionsContainer.innerHTML = deductions.map(item => createInputRow(item, 'Potongan')).join('');
     };
 
     const renderPayslipPreview = () => {
+        const createPreviewRow = (item) => `
+            <tr>
+                <td>${item.label}</td>
+                <td class="amount">${formatRupiah(item.value)}</td>
+            </tr>
+        `;
+
         // Render Earnings Preview
-        previewEarningsBody.innerHTML = '';
-        // Add basic salary first
         const basicSalary = parseFloat(document.getElementById('basicSalary').value) || 0;
-        previewEarningsBody.innerHTML += `
+        previewEarningsBody.innerHTML = `
             <tr>
                 <td>Gaji Pokok</td>
                 <td class="amount">${formatRupiah(basicSalary)}</td>
             </tr>
+            ${earnings.map(createPreviewRow).join('')}
         `;
-        earnings.forEach(item => {
-            previewEarningsBody.innerHTML += `
-                <tr>
-                    <td>${item.label}</td>
-                    <td class="amount">${formatRupiah(item.value)}</td>
-                </tr>
-            `;
-        });
+
+        // Render Commissions Preview
+        previewCommissionsBody.innerHTML = commissions.map(createPreviewRow).join('');
 
         // Render Deductions Preview
-        previewDeductionsBody.innerHTML = '';
-        deductions.forEach(item => {
-            previewDeductionsBody.innerHTML += `
-                <tr>
-                    <td>${item.label}</td>
-                    <td class="amount">${formatRupiah(item.value)}</td>
-                </tr>
-            `;
-        });
+        previewDeductionsBody.innerHTML = deductions.map(createPreviewRow).join('');
     };
 
     // --- Calculation and Main Update Function ---
@@ -111,24 +92,32 @@ document.addEventListener('DOMContentLoaded', () => {
         // Calculate totals
         const basicSalary = parseFloat(document.getElementById('basicSalary').value) || 0;
         const totalEarnings = basicSalary + earnings.reduce((sum, item) => sum + item.value, 0);
+        const totalCommissions = commissions.reduce((sum, item) => sum + item.value, 0);
         const totalDeductions = deductions.reduce((sum, item) => sum + item.value, 0);
-        const netSalary = totalEarnings - totalDeductions;
+        const netSalary = totalEarnings + totalCommissions - totalDeductions;
 
         // Update totals in the DOM
         document.getElementById('previewTotalEarnings').textContent = formatRupiah(totalEarnings);
+        document.getElementById('previewTotalCommissions').textContent = formatRupiah(totalCommissions);
         document.getElementById('previewTotalDeductions').textContent = formatRupiah(totalDeductions);
         document.getElementById('previewNetSalary').textContent = formatRupiah(netSalary);
     };
 
     // --- Event Handlers ---
     addEarningButton.addEventListener('click', () => {
-        earnings.push({ id: Date.now(), label: 'Pendapatan Baru', value: 0 });
+        earnings.push({ id: Date.now(), label: '', value: 0 });
+        renderDynamicInputs();
+        updateApp();
+    });
+
+    addCommissionButton.addEventListener('click', () => {
+        commissions.push({ id: Date.now(), label: '', value: 0 });
         renderDynamicInputs();
         updateApp();
     });
 
     addDeductionButton.addEventListener('click', () => {
-        deductions.push({ id: Date.now(), label: 'Potongan Baru', value: 0 });
+        deductions.push({ id: Date.now(), label: '', value: 0 });
         renderDynamicInputs();
         updateApp();
     });
@@ -149,12 +138,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const handleDelete = (e, collection) => {
+    const handleDelete = (e, collection, collectionName) => {
         if (e.target.matches('.delete-button')) {
             const row = e.target.closest('.dynamic-input-row');
             const id = parseInt(row.dataset.id);
-            if (collection === 'earnings') {
+            if (collectionName === 'earnings') {
                 earnings = earnings.filter(i => i.id !== id);
+            } else if (collectionName === 'commissions') {
+                commissions = commissions.filter(i => i.id !== id);
             } else {
                 deductions = deductions.filter(i => i.id !== id);
             }
@@ -164,10 +155,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     dynamicEarningsContainer.addEventListener('input', (e) => handleDynamicInput(e, earnings));
+    dynamicCommissionsContainer.addEventListener('input', (e) => handleDynamicInput(e, commissions));
     dynamicDeductionsContainer.addEventListener('input', (e) => handleDynamicInput(e, deductions));
 
-    dynamicEarningsContainer.addEventListener('click', (e) => handleDelete(e, 'earnings'));
-    dynamicDeductionsContainer.addEventListener('click', (e) => handleDelete(e, 'deductions'));
+    dynamicEarningsContainer.addEventListener('click', (e) => handleDelete(e, earnings, 'earnings'));
+    dynamicCommissionsContainer.addEventListener('click', (e) => handleDelete(e, commissions, 'commissions'));
+    dynamicDeductionsContainer.addEventListener('click', (e) => handleDelete(e, deductions, 'deductions'));
 
     form.addEventListener('input', (e) => {
         // Update only if the change is not from a dynamic input (to avoid double-firing)
@@ -190,8 +183,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Re-calculate totals to ensure they are up-to-date
         const basicSalary = parseFloat(document.getElementById('basicSalary').value) || 0;
         const totalEarnings = basicSalary + earnings.reduce((sum, item) => sum + item.value, 0);
+        const totalCommissions = commissions.reduce((sum, item) => sum + item.value, 0);
         const totalDeductions = deductions.reduce((sum, item) => sum + item.value, 0);
-        const netSalary = totalEarnings - totalDeductions;
+        const netSalary = totalEarnings + totalCommissions - totalDeductions;
 
         // Constructing the plain text email body
         let body = `SLIP GAJI KARYAWAN\n`;
@@ -209,6 +203,14 @@ document.addEventListener('DOMContentLoaded', () => {
             body += `${item.label}: ${formatRupiah(item.value)}\n`;
         });
         body += `TOTAL PENDAPATAN: ${formatRupiah(totalEarnings)}\n\n`;
+
+        if (commissions.length > 0) {
+            body += `KOMISI\n`;
+            commissions.forEach(item => {
+                body += `${item.label}: ${formatRupiah(item.value)}\n`;
+            });
+            body += `TOTAL KOMISI: ${formatRupiah(totalCommissions)}\n\n`;
+        }
 
         body += `POTONGAN\n`;
         deductions.forEach(item => {
