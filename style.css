@@ -237,6 +237,7 @@ body {
 
 .payslip-details table,
 .payslip-earnings table,
+.payslip-commissions table,
 .payslip-deductions table {
     width: 100%;
     border-collapse: collapse;
@@ -245,6 +246,7 @@ body {
 
 .payslip-details td,
 .payslip-earnings td,
+.payslip-commissions td,
 .payslip-deductions td {
     padding: 8px 0;
     border-bottom: 1px dashed var(--border-color);
@@ -260,6 +262,7 @@ body {
 }
 
 .payslip-earnings h4,
+.payslip-commissions h4,
 .payslip-deductions h4 {
     color: var(--primary-color);
     margin-bottom: 15px;
@@ -269,12 +272,14 @@ body {
 }
 
 .payslip-earnings .amount,
+.payslip-commissions .amount,
 .payslip-deductions .amount {
     text-align: right;
     font-weight: 500;
 }
 
 .payslip-earnings .total td,
+.payslip-commissions .total td,
 .payslip-deductions .total td {
     border-bottom: none;
     padding-top: 15px;
@@ -282,12 +287,14 @@ body {
 }
 
 .payslip-earnings .total td:first-child,
+.payslip-commissions .total td:first-child,
 .payslip-deductions .total td:first-child {
     font-weight: 700;
     color: var(--primary-color);
 }
 
 .payslip-earnings .total .amount,
+.payslip-commissions .total .amount,
 .payslip-deductions .total .amount {
     font-weight: 700;
     color: var(--primary-color);
